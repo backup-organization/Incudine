@@ -17,7 +17,7 @@ class RenderUtils {
     static inline MinecraftUIRenderContext* context;
     static inline std::vector<void(*)()> drawFuncs;
 public:
-    static auto setContext(MinecraftUIRenderContext* context) -> void;
+    static auto setContext(uintptr_t context) -> void;
     static auto getContext() -> MinecraftUIRenderContext*;
     static auto setCachedFont(BitmapFont* context) -> void;
     static auto getCachedFont() -> BitmapFont*;

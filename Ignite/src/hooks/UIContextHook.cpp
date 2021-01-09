@@ -1,14 +1,14 @@
 #include "UIContextHook.h"
 
 
-auto UIContextHook::renderCallback(uint64_t a1, MinecraftUIRenderContext* renderContext) -> int {
+auto UIContextHook::renderCallback(uint64_t a1, uintptr_t renderContext) -> int {
     RenderUtils::setContext(renderContext);
 
     RenderUtils::invokeDraws();
 
     return PLH::FnCast(renderOriginal, &renderCallback)(a1, renderContext);
 }
-auto UIContextHook::textCallback(MinecraftUIRenderContext* renderContext, class BitmapFont* font, class RectangleArea* rect, std::string* text, class Color* color, float alpha, class TextAlignment* alignment, class TextMeasureData* measureData, class CaretMeasureData* caretData) -> int {
+auto UIContextHook::textCallback(uintptr_t renderContext, struct BitmapFont* font, class RectangleArea* rect, std::string* text, class Color* color, float alpha, class TextAlignment* alignment, class TextMeasureData* measureData, class CaretMeasureData* caretData) -> int {
     if(!RenderUtils::getCachedFont())
         RenderUtils::setCachedFont(font);
     return PLH::FnCast(textOriginal, &textCallback)(renderContext, font, rect, text, color, alpha, alignment, measureData, caretData);

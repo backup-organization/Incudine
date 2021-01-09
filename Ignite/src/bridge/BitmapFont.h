@@ -3,10 +3,7 @@
 
 #include "DynamicStruct.h"
 
-struct BitmapFont : DynamicStruct {
-    BitmapFont() : DynamicStruct("BitmapFont") {
-
-    };
+struct BitmapFont {
 };
 
 #endif /* IGNITE_BITMAPFONT_H */

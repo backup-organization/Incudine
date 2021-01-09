@@ -1,13 +1,17 @@
 #include "RenderUtils.h"
 
-auto RenderUtils::setContext(MinecraftUIRenderContext* context) -> void {
-    RenderUtils::context = context;
+auto RenderUtils::setContext(uintptr_t context) -> void {
+    if(!RenderUtils::context)
+        RenderUtils::context = new MinecraftUIRenderContext();
+    RenderUtils::context->setAddress(context);
+    
 }
 auto RenderUtils::getContext() -> MinecraftUIRenderContext* {
     return context;
 }
 auto RenderUtils::setCachedFont(BitmapFont* cachedFont) -> void {
-    RenderUtils::cachedFont = cachedFont;
+    if(!RenderUtils::cachedFont)
+        RenderUtils::cachedFont = cachedFont;
 }
 auto RenderUtils::getCachedFont() -> BitmapFont* {
     return cachedFont;

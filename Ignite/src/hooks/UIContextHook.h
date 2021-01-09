@@ -22,8 +22,8 @@ public:
 private:
     static inline uint64_t renderOriginal = 0;
     static inline uint64_t textOriginal = 0;
-    static auto renderCallback(uint64_t a1, MinecraftUIRenderContext* renderContext) -> int;
-    static auto textCallback(MinecraftUIRenderContext* renderContext, class BitmapFont* font, class RectangleArea* rect, std::string* text, class Color* color, float alpha, class TextAlignment* alignment, class TextMeasureData* measureData, class CaretMeasureData* caretData) -> int;
+    static auto renderCallback(uint64_t a1, uintptr_t renderContext) -> int;
+    static auto textCallback(uintptr_t renderContext, class BitmapFont* font, class RectangleArea* rect, std::string* text, class Color* color, float alpha, class TextAlignment* alignment, class TextMeasureData* measureData, class CaretMeasureData* caretData) -> int;
 };
 
 

@@ -24,8 +24,10 @@ struct GuiData : DynamicStruct {
     };
     auto getScaledResolution() -> Vector2 {
         DynamicField* theField = (DynamicField*)this->get("scaledResolution");
-        Vector2* theVec = (Vector2*)theField->asVoid();
-        return *theVec;
+        Log::getLogger()->write("Get scaled res, address: ")->write(theField->getAddress(), true)->writeLine();
+        Vector2 theVec = *((Vector2*)theField->asVoid());
+        Log::getLogger()->write("Got scaled res");
+        return theVec;
     };
 	auto getGuiSize() -> double {
         DynamicField* theField = (DynamicField*)this->get("guiSize");

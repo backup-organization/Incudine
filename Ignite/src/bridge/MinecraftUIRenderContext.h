@@ -24,23 +24,23 @@ struct MinecraftUIRenderContext : DynamicStruct {
     }
     auto drawText(BitmapFont* font, RectangleArea* rect, std::string* text, Color* color, float alpha, TextMeasureData* measureData, CaretMeasureData* caretData) -> void {
         DynamicMethod* theFunc = (DynamicMethod*)this->get("drawText");
-        void(* theFn)(uintptr_t, BitmapFont*, RectangleArea*, std::string*, Color*, float, class TextAlignment*, TextMeasureData*, CaretMeasureData*)  = (void(*)(uintptr_t, BitmapFont*, RectangleArea*, std::string*, Color*, float, class TextAlignment*, TextMeasureData*, CaretMeasureData*))theFunc->asVoid();
-        theFn(this->getAddress(), font, rect, text, color, alpha, nullptr, measureData, caretData);
+        void(__fastcall** theFn)(uintptr_t, BitmapFont*, RectangleArea*, std::string*, Color*, float, class TextAlignment*, TextMeasureData*, CaretMeasureData*)  = (void(__fastcall**)(uintptr_t, BitmapFont*, RectangleArea*, std::string*, Color*, float, class TextAlignment*, TextMeasureData*, CaretMeasureData*))theFunc->asVoid();
+        (*theFn)(this->getAddress(), font, rect, text, color, alpha, nullptr, measureData, caretData);
     }
     auto flushText() -> void {
         DynamicMethod* theFunc = (DynamicMethod*)this->get("drawText");
-        void(* theFn)(uintptr_t, float)  = (void(*)(uintptr_t, float))theFunc->asVoid();
-        theFn(this->getAddress(), 0);
+        void(__fastcall** theFn)(uintptr_t, float)  = (void(__fastcall**)(uintptr_t, float))theFunc->asVoid();
+        (*theFn)(this->getAddress(), 0);
     }
     auto drawRectangle(Vector4* positions, Color* color, float alpha, int width) -> void {
         DynamicMethod* theFunc = (DynamicMethod*)this->get("drawRectangle");
-        void(* theFn)(uintptr_t, Vector4*, Color*, float, int)  = (void(*)(uintptr_t, Vector4*, Color*, float, int))theFunc->asVoid();
-        theFn(this->getAddress(), positions, color, alpha, width);
+        void(__fastcall** theFn)(uintptr_t, Vector4*, Color*, float, int)  = (void(__fastcall**)(uintptr_t, Vector4*, Color*, float, int))theFunc->asVoid();
+        (*theFn)(this->getAddress(), positions, color, alpha, width);
     }
     auto fillRectangle(Vector4* positions, Color* color, float alpha) -> void {
         DynamicMethod* theFunc = (DynamicMethod*)this->get("fillRectangle");
-        void(* theFn)(uintptr_t, Vector4*, Color*, float)  = (void(*)(uintptr_t, Vector4*, Color*, float))theFunc->asVoid();
-        theFn(this->getAddress(), positions, color, alpha);
+        void(__fastcall** theFn)(uintptr_t, Vector4*, Color*, float)  = (void(__fastcall**)(uintptr_t, Vector4*, Color*, float))theFunc->asVoid();
+        (*theFn)(this->getAddress(), positions, color, alpha);
     }
 };
 

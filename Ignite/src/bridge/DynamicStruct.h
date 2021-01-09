@@ -6,7 +6,6 @@
 #include "../util/Log.h"
 
 struct DynamicStruct;
-struct DynamicField;
 
 
 struct DynamicObject {
@@ -20,7 +19,7 @@ struct DynamicObject {
         return this->name;
     };
     auto asVoid() -> void* {
-        return (void*)this->address;
+        return (void*)this->getAddress();
     }
     auto setAddress(uintptr_t address) -> void {
         this->address = address;
