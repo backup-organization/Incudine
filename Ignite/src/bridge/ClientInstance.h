@@ -13,13 +13,13 @@ struct ClientInstance : DynamicStruct {
 
     auto getLocalPlayer() -> LocalPlayer* {
         DynamicMethod* getLP = (DynamicMethod*)this->get("getLocalPlayer");
-        void*(* theFn)()  = (void*(*)())getLP->asVoid();
-        return (LocalPlayer*)theFn();
+        LocalPlayer*(* theFn)()  = (LocalPlayer*(*)())getLP->asVoid();
+        return theFn();
     }
     auto getGuiData() -> GuiData* {
         DynamicMethod* getGD = (DynamicMethod*)this->get("getGuiData");
-        void*(* theFn)()  = (void*(*)())getGD->asVoid();
-        return (GuiData*)theFn();
+        GuiData*(* theFn)()  = (GuiData*(*)())getGD->asVoid();
+        return theFn();
     }
 };
 
