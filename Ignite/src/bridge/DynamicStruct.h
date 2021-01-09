@@ -18,6 +18,9 @@ struct DynamicObject {
     std::string getName() {
         return this->name;
     };
+    auto asVoid() -> void* {
+        return (void*)this->address;
+    }
 };
 
 struct DynamicField : DynamicObject {
@@ -30,9 +33,6 @@ struct DynamicField : DynamicObject {
 
 struct DynamicMethod : DynamicObject {
     DynamicMethod(std::string methodName, uintptr_t address) : DynamicObject(methodName, address) {
-    }
-    auto asVoid() -> void* {
-        return (void*)this->address;
     }
 };
 
