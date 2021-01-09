@@ -1,0 +1,23 @@
+#ifndef IGNITE_CLIENTINSTANCEHOOK_H
+#define IGNITE_CLIENTINSTANCEHOOK_H
+
+#include <iostream>
+#include <windows.h>
+#include <vector>
+#include <string>
+#include "polyhook2/Detour/x64Detour.hpp"
+#include "polyhook2/CapstoneDisassembler.hpp"
+#include "../bridge/ClientInstance.h"
+#include "../util/IMem.h"
+#include "../util/SigInfo.h"
+
+class ClientInstanceHook {
+public:
+    static auto hook() -> HRESULT;
+private:
+    static inline uint64_t clientInstanceOriginal = 0;
+    static auto clientInstanceCallback(ClientInstance* clientInstance, char param_2) -> int;
+};
+
+
+#endif //IGNITE_CLIENTINSTANCEHOOK_H

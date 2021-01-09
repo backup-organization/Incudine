@@ -1,0 +1,6 @@
+[submodule "PolyHook_2_0"]
+	path = PolyHook_2_0
+	url = https://github.com/stevemk14ebr/PolyHook_2_0.git
+[submodule "minhook"]
+	path = minhook
+	url = https://github.com/TsudaKageyu/minhook.git
