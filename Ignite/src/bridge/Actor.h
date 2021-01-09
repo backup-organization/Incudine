@@ -4,10 +4,10 @@
 #include "DynamicStruct.h"
 
 struct Actor : DynamicStruct {
-    Actor(uintptr_t address) : DynamicStruct("Actor", address) {
+    Actor() : DynamicStruct("Actor") {
 
     };
-    Actor(std::string structName, uintptr_t address) : DynamicStruct(structName, address) {
+    Actor(std::string structName) : DynamicStruct(structName) {
         
     };
 };

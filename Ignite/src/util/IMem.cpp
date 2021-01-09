@@ -44,8 +44,9 @@ auto IMem::unprotectMem(void* addr, int len) -> void {
     VirtualProtect(addr, len, PAGE_EXECUTE_READWRITE, &curProtection);
 }
 
-auto IMem::setClientInstance(struct ClientInstance* instance) -> void {
-    clientInstance = instance;
+auto IMem::setClientInstance(uintptr_t instance) -> void {
+    if(!clientInstance)
+        clientInstance = new ClientInstance(instance);
 }
 auto IMem::getClientInstance() -> struct ClientInstance* {
     return clientInstance;

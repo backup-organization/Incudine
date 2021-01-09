@@ -3,7 +3,7 @@
 
 std::vector<SigInfo*>* signatures;
 
-auto ClientInstanceHook::clientInstanceCallback(ClientInstance *theInstance, char param_2) -> int {
+auto ClientInstanceHook::clientInstanceCallback(uintptr_t theInstance, char param_2) -> int {
     IMem::setClientInstance(theInstance);
     //Log::getLogger()->write("Client instance address: ")->write((uintptr_t)theInstance, true)->writeLine("");
     return PLH::FnCast(clientInstanceOriginal, &clientInstanceCallback)(theInstance, param_2);

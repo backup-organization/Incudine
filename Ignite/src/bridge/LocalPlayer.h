@@ -4,10 +4,10 @@
 #include "Player.h"
 
 struct LocalPlayer : Player {
-    LocalPlayer(uintptr_t address) : Player("LocalPlayer", address) {
+    LocalPlayer() : Player("LocalPlayer") {
 
     };
-    LocalPlayer(std::string structName, uintptr_t address) : Player(structName, address) {
+    LocalPlayer(std::string structName) : Player(structName) {
 
     };
 };

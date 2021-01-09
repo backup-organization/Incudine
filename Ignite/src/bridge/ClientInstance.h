@@ -6,20 +6,30 @@
 #include "GuiData.h"
 
 struct ClientInstance : DynamicStruct {
-    ClientInstance(uintptr_t address) : DynamicStruct("ClientInstance", address) {
-        this->addVirtual("getLocalPlayer", 23);
-        this->addVirtual("getGuiData", 194);
+    GuiData* guiData;
+    LocalPlayer* localPlayer;
+
+    ClientInstance(uintptr_t address) : DynamicStruct("ClientInstance") {
+        this->setAddress(address);
+        this->addVirtual(new DynamicMethod("getLocalPlayer"), 23);
+        this->addVirtual(new DynamicMethod("getGuiData"), 194);
     };
 
     auto getLocalPlayer() -> LocalPlayer* {
         DynamicMethod* getLP = (DynamicMethod*)this->get("getLocalPlayer");
-        LocalPlayer*(* theFn)()  = (LocalPlayer*(*)())getLP->asVoid();
-        return theFn();
+        uintptr_t(* theFn)()  = (uintptr_t(*)())getLP->asVoid();
+        if(!localPlayer)
+            localPlayer = new LocalPlayer();
+        localPlayer->setAddress(theFn());
+        return localPlayer;
     }
     auto getGuiData() -> GuiData* {
         DynamicMethod* getGD = (DynamicMethod*)this->get("getGuiData");
-        GuiData*(* theFn)()  = (GuiData*(*)())getGD->asVoid();
-        return theFn();
+        uintptr_t(* theFn)()  = (uintptr_t(*)())getGD->asVoid();
+        if(!guiData)
+            guiData = new GuiData();
+        guiData->setAddress(theFn());
+        return guiData;
     }
 };
 

@@ -5,16 +5,16 @@
 #include "../util/IMath.h"
 
 struct GuiData : DynamicStruct {
-    GuiData(uintptr_t address) : DynamicStruct("GuiData", address) {
-        this->addField("resolution", 0x18);
-        this->addField("scaledResolution", 0x28);
-        this->addField("guiSize", 0x30);
-        this->addField("guiScale", 0x38);
-        this->addField("mouseX", 0x52);
-        this->addField("mouseY", 0x54);
-        this->addField("isWorldLoaded", 0x56);
-        this->addField("heldItemSlot", 0x58);
-        this->addField("heldItemName", 0x94);
+    GuiData() : DynamicStruct("GuiData") {
+        this->addField(new DynamicField("resolution"), 0x18);
+        this->addField(new DynamicField("scaledResolution"), 0x28);
+        this->addField(new DynamicField("guiSize"), 0x30);
+        this->addField(new DynamicField("guiScale"), 0x38);
+        this->addField(new DynamicField("mouseX"), 0x52);
+        this->addField(new DynamicField("mouseY"), 0x54);
+        this->addField(new DynamicField("isWorldLoaded"), 0x56);
+        this->addField(new DynamicField("heldItemSlot"), 0x58);
+        this->addField(new DynamicField("heldItemName"), 0x94);
     };
 
     auto getResolution() -> Vector2 {

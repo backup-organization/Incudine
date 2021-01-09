@@ -4,10 +4,10 @@
 #include "Actor.h"
 
 struct Mob : Actor {
-    Mob(uintptr_t address) : Actor("Mob", address) {
+    Mob() : Actor("Mob") {
 
     };
-    Mob(std::string structName, uintptr_t address) : Actor(structName, address) {
+    Mob(std::string structName) : Actor(structName) {
 
     };
 };

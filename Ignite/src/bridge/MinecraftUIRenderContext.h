@@ -9,12 +9,12 @@
 #include "CaretMeasureData.h"
 
 struct MinecraftUIRenderContext : DynamicStruct {
-    MinecraftUIRenderContext(uintptr_t address) : DynamicStruct("MinecraftUIRenderContext", address) {
-        this->addVirtual("getLineLength", 1);
-        this->addVirtual("drawText", 5);
-        this->addVirtual("flushText", 6);
-        this->addVirtual("drawRectangle", 12);
-        this->addVirtual("fillRectangle", 13);
+    MinecraftUIRenderContext() : DynamicStruct("MinecraftUIRenderContext") {
+        this->addVirtual(new DynamicMethod("getLineLength"), 1);
+        this->addVirtual(new DynamicMethod("drawText"), 5);
+        this->addVirtual(new DynamicMethod("flushText"), 6);
+        this->addVirtual(new DynamicMethod("drawRectangle"), 12);
+        this->addVirtual(new DynamicMethod("fillRectangle"), 13);
     };
 
     auto getLineLength(BitmapFont* font, std::string* text, float size) -> float {

@@ -12,19 +12,22 @@ struct DynamicObject {
     std::string name;
     uintptr_t address;
 
-    DynamicObject(std::string name, uintptr_t address) {
+    DynamicObject(std::string name) {
         this->name = name;
     };
-    std::string getName() {
+    auto getName() -> std::string {
         return this->name;
     };
     auto asVoid() -> void* {
         return (void*)this->address;
     }
+    auto setAddress(uintptr_t address) -> void {
+        this->address = address;
+    }
 };
 
 struct DynamicField : DynamicObject {
-    DynamicField(std::string fieldName, uintptr_t address) : DynamicObject(fieldName, address) {
+    DynamicField(std::string fieldName) : DynamicObject(fieldName) {
     };
     auto asStruct() -> DynamicStruct* {
         return (DynamicStruct*)this;
@@ -32,7 +35,7 @@ struct DynamicField : DynamicObject {
 };
 
 struct DynamicMethod : DynamicObject {
-    DynamicMethod(std::string methodName, uintptr_t address) : DynamicObject(methodName, address) {
+    DynamicMethod(std::string methodName) : DynamicObject(methodName) {
     }
 };
 
@@ -40,20 +43,24 @@ struct DynamicStruct : DynamicObject {
     std::vector<DynamicField*>* fields;
     std::vector<DynamicMethod*>* virtualFunctions;
     std::vector<DynamicMethod*>* functions;
-    DynamicStruct(std::string structName, uintptr_t address) : DynamicObject(structName, address) {
+    DynamicStruct(std::string structName) : DynamicObject(structName) {
         fields = new std::vector<DynamicField*>();
         virtualFunctions = new std::vector<DynamicMethod*>();
         functions = new std::vector<DynamicMethod*>();
     };
 
-    auto addField(std::string fieldName, uintptr_t offset) -> void {
-        this->fields->push_back(new DynamicField(fieldName, this->address+offset));
+    auto addField(DynamicField* theField, uintptr_t offset) -> void {
+        theField->setAddress(this->address+offset);
+        this->fields->push_back(theField);
     };
-    auto addVirtual(std::string methodName, uintptr_t offset) -> void {
-        this->virtualFunctions->push_back(new DynamicMethod(methodName, (*((uintptr_t*)this->address))+(8*offset)));
+    auto addVirtual(DynamicMethod* theMethod, uintptr_t offset) -> void {
+        uintptr_t newAddr = (*((uintptr_t*)this->address))+(8*offset);
+        theMethod->setAddress(newAddr);
+        this->virtualFunctions->push_back(theMethod);
     };
-    auto addFunction(std::string methodName, uintptr_t address) -> void {
-        this->functions->push_back(new DynamicMethod(methodName, address));
+    auto addFunction(DynamicMethod* theMethod, uintptr_t address) -> void {
+        theMethod->setAddress(address);
+        this->functions->push_back(theMethod);
     };
 
     auto get(std::string name) -> DynamicObject* {

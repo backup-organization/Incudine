@@ -16,7 +16,7 @@ public:
     static auto hook() -> HRESULT;
 private:
     static inline uint64_t clientInstanceOriginal = 0;
-    static auto clientInstanceCallback(ClientInstance* clientInstance, char param_2) -> int;
+    static auto clientInstanceCallback(uintptr_t clientInstance, char param_2) -> int;
 };
 
 

@@ -4,10 +4,10 @@
 #include "Mob.h"
 
 struct Player : Mob {
-    Player(uintptr_t address) : Mob("Player", address) {
+    Player() : Mob("Player") {
 
     };
-    Player(std::string structName, uintptr_t address) : Mob(structName, address) {
+    Player(std::string structName) : Mob(structName) {
 
     };
 };

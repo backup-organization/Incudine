@@ -8,6 +8,8 @@
 #include <Windows.h>
 #include <Psapi.h>
 
+#include "../bridge/ClientInstance.h"
+
 class IMem {
     static inline struct ClientInstance* clientInstance = nullptr;
 public:
@@ -18,7 +20,7 @@ public:
     static auto getBaseModuleSize() -> long long;
     static auto getBaseModuleEnd() -> long long;
     static auto unprotectMem(void* addr, int len) -> void;
-    static auto setClientInstance(struct ClientInstance*) -> void;
+    static auto setClientInstance(uintptr_t clientInstance) -> void;
     static auto getClientInstance() -> struct ClientInstance*;
 };
 
