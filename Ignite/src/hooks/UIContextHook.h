@@ -11,7 +11,6 @@
 #include "../bridge/CaretMeasureData.h"
 #include "../bridge/MinecraftUIRenderContext.h"
 #include "../bridge/BitmapFont.h"
-#include "../bridge/ClientInstance.h"
 #include "../util/IMem.h"
 #include "../util/Log.h"
 #include "../util/RenderUtils.h"

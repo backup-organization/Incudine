@@ -6,8 +6,8 @@
 #include "GuiData.h"
 
 struct ClientInstance : DynamicStruct {
-    GuiData* guiData;
-    LocalPlayer* localPlayer;
+    GuiData* guiData = nullptr;
+    LocalPlayer* localPlayer = nullptr;
 
     ClientInstance(uintptr_t address) : DynamicStruct("ClientInstance") {
         this->setAddress(address);
@@ -17,18 +17,18 @@ struct ClientInstance : DynamicStruct {
 
     auto getLocalPlayer() -> LocalPlayer* {
         DynamicMethod* getLP = (DynamicMethod*)this->get("getLocalPlayer");
-        uintptr_t(* theFn)()  = (uintptr_t(*)())getLP->asVoid();
+        uintptr_t(* theFn)(uintptr_t)  = (uintptr_t(*)(uintptr_t))getLP->asVoid();
         if(!localPlayer)
             localPlayer = new LocalPlayer();
-        localPlayer->setAddress(theFn());
+        localPlayer->setAddress(theFn(this->getAddress()));
         return localPlayer;
     }
     auto getGuiData() -> GuiData* {
         DynamicMethod* getGD = (DynamicMethod*)this->get("getGuiData");
-        uintptr_t(* theFn)()  = (uintptr_t(*)())getGD->asVoid();
+        uintptr_t(__fastcall** theFn)(uintptr_t) = (uintptr_t(__fastcall** )(uintptr_t))getGD->asVoid();
         if(!guiData)
             guiData = new GuiData();
-        guiData->setAddress(theFn());
+        guiData->setAddress((*theFn)(this->getAddress()));
         return guiData;
     }
 };

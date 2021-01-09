@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include "../util/Log.h"
 
 struct DynamicStruct;
 struct DynamicField;
@@ -23,6 +24,9 @@ struct DynamicObject {
     }
     auto setAddress(uintptr_t address) -> void {
         this->address = address;
+    }
+    auto getAddress() -> uintptr_t {
+        return this->address;
     }
 };
 
@@ -50,11 +54,11 @@ struct DynamicStruct : DynamicObject {
     };
 
     auto addField(DynamicField* theField, uintptr_t offset) -> void {
-        theField->setAddress(this->address+offset);
+        theField->setAddress(this->getAddress()+offset);
         this->fields->push_back(theField);
     };
     auto addVirtual(DynamicMethod* theMethod, uintptr_t offset) -> void {
-        uintptr_t newAddr = (*((uintptr_t*)this->address))+(8*offset);
+        uintptr_t newAddr = (*((uintptr_t*)this->getAddress()))+(8*offset);
         theMethod->setAddress(newAddr);
         this->virtualFunctions->push_back(theMethod);
     };
@@ -79,6 +83,7 @@ struct DynamicStruct : DynamicObject {
                 return function;
             }
         }
+        Log::getLogger()->write("Failed to find dynamic object \"")->write(name)->writeLine("\"");
         return nullptr;
     };
 };

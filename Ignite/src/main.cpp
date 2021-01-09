@@ -15,9 +15,10 @@ auto startIgnite() -> int {
     MouseHook::hook();
     UIContextHook::hook();
 
-    ModuleManager::getModuleManager();
+    //ModuleManager::getModuleManager();
 
-    Log::getLogger()->write("GuiData*: ")->write(IMem::getClientInstance()->getGuiData(), true)->writeLine();
+    Log::getLogger()->write("ClientInstance*: ")->write(IMem::getClientInstance()->getAddress(), true)->writeLine();
+    Log::getLogger()->write("GuiData*: ")->write(IMem::getClientInstance()->getGuiData()->getAddress(), true)->writeLine();
     return 0;
 }
 
