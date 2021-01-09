@@ -8,17 +8,17 @@
 #include "impl/ModInfo.h"
 
 class ModuleManager : public Manager<Module>{
-    static inline ModuleManager* moduleManeger;
+    static inline ModuleManager* moduleManager;
     ModuleManager() : Manager<Module>("Modules") {
         this->addItem(new Keystrokes());
         this->addItem(new ModInfo());
     }
 public:
-    static ModuleManager* getModuleManager() {
-        if(!moduleManeger) {
-            moduleManeger = new ModuleManager();
+    static auto getModuleManager() -> ModuleManager* {
+        if(!moduleManager) {
+            moduleManager = new ModuleManager();
         }
-        return moduleManeger;
+        return moduleManager;
     }
 };
 
