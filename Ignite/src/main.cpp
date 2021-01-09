@@ -18,7 +18,6 @@ auto startIgnite() -> int {
     ModuleManager::getModuleManager();
 
     Log::getLogger()->write("GuiData*: ")->write(IMem::getClientInstance()->getGuiData(), true)->writeLine();
-
     return 0;
 }
 

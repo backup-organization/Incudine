@@ -1,10 +1,7 @@
 #include "Keystrokes.h"
 
-float transitions[0xFF];
-int transitionId=0;
-void drawKey(char key, Vector2 loc, float scale) {
+void Keystrokes::drawKey(char key, Vector2 loc, float scale) {
     transitionId++;
-    ClientInstance* ci = IMem::getClientInstance();
     float colorValue = transitions[transitionId];
     Color textColor = Color(1,1,1,1);
     Color bgColor = Color(colorValue,colorValue,colorValue,colorValue);
@@ -27,7 +24,7 @@ void drawKey(char key, Vector2 loc, float scale) {
     RenderUtils::drawText(keyStr, loc, textColor, scale);
 }
 void drawButton(char button, Vector2 loc, float scale) {
-    std::string buttonName = "";
+    std::string buttonName;
     switch(button) {
     case 1:
         buttonName = "LMB";
@@ -53,7 +50,7 @@ void drawButton(char button, Vector2 loc, float scale) {
     RenderUtils::drawText(btnStr, loc, buttonColor, scale);
 }
 
-void KeyStrokes_onDraw() {
+void Keystrokes::onDraw() {
     transitionId = 0;
     ClientInstance* ci = IMem::getClientInstance();
 
@@ -73,5 +70,5 @@ void KeyStrokes_onDraw() {
 }
 
 Keystrokes::Keystrokes() : Module("Keystrokes") {
-    this->onRender(KeyStrokes_onDraw);
+    this->onRender(onDraw);
 }
