@@ -4,7 +4,7 @@
 #include "DynamicStruct.h"
 
 struct BitmapFont : DynamicStruct {
-    BitmapFont(uintptr_t address) : DynamicStruct(address) {
+    BitmapFont(uintptr_t address) : DynamicStruct("BitmapFont", address) {
 
     };
 };
