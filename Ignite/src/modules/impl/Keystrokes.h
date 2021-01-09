@@ -10,6 +10,12 @@
 class Keystrokes : public Module {
 public:
     Keystrokes();
+private:
+    static void onDraw();
+    static void drawKey(char key, Vector2 loc, float scale);
+    static inline float transitions[0xFF];
+    static inline int transitionId = 0;
+    static inline ClientInstance* ci = IMem::getClientInstance();
 };
 
 #endif /* IGNITE_KEYSTROKES_H */
