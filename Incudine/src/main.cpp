@@ -7,8 +7,8 @@
 #include "hooks/UIContextHook.h"
 #include "modules/ModuleManager.h"
 
-auto startIgnite() -> int {
-    Log::getLogger()->writeLine("Loading Ignite...");
+auto startIncudine() -> int {
+    Log::getLogger()->writeLine("Loading Incudine...");
 
     ClientInstanceHook::hook();
     KeyHook::hook();
@@ -26,7 +26,7 @@ auto startIgnite() -> int {
 BOOL WINAPI DllMain(HMODULE hModule, DWORD callReason, LPVOID lpReserved) {
     switch(callReason) {
         case DLL_PROCESS_ATTACH:
-            CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)startIgnite, hModule, 0, nullptr);
+            CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)startIncudine, hModule, 0, nullptr);
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:
         case DLL_PROCESS_DETACH:

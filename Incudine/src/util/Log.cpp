@@ -21,7 +21,7 @@ auto Log::getPath() -> std::string {
 auto Log::write(const std::string& toWrite) -> Log*{
 
     std::stringstream ss;
-    ss << getPath() << "IgniteDebug.txt";
+    ss << getPath() << "IncudineDebug.txt";
 
     std::string debugFilePath = ss.str();
     std::ofstream fileStream(debugFilePath, std::ios::out|std::ios::app);
