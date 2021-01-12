@@ -10,7 +10,7 @@
 class ModuleManager : public Manager<Module>{
     static inline ModuleManager* moduleManager;
     ModuleManager() : Manager<Module>("Modules") {
-        //this->addItem(new Keystrokes());
+        this->addItem(new Keystrokes());
         this->addItem(new ModInfo());
     }
 public:

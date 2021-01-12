@@ -23,9 +23,7 @@ struct GuiData : DynamicStruct {
         return *theVec;
     };
     auto getScaledResolution() -> Vector2 {
-        Log::getLogger()->writeLine("Getting scaled res...");
         DynamicField* theField = (DynamicField*)this->get("scaledResolution");
-        Log::getLogger()->writeLine("Got field with addr: ")->write(theField->getAddress(), true)->writeLine();
         Vector2 theVec = *((Vector2*)theField->asVoid());
         return theVec;
     };
