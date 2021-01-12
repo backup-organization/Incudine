@@ -19,6 +19,7 @@ auto startIgnite() -> int {
 
     Log::getLogger()->write("ClientInstance*: ")->write(IMem::getClientInstance()->getAddress(), true)->writeLine();
     Log::getLogger()->write("GuiData*: ")->write(IMem::getClientInstance()->getGuiData()->getAddress(), true)->writeLine();
+    Log::getLogger()->write("LocalPlayer*: ")->write(IMem::getClientInstance()->getLocalPlayer()->getAddress(), true)->writeLine();
     return 0;
 }
 

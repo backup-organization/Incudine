@@ -5,16 +5,16 @@
 #include "../util/IMath.h"
 
 struct GuiData : DynamicStruct {
-    GuiData() : DynamicStruct("GuiData") {
-        this->addField(new DynamicField("resolution"), 0x18);
-        this->addField(new DynamicField("scaledResolution"), 0x28);
-        this->addField(new DynamicField("guiSize"), 0x30);
-        this->addField(new DynamicField("guiScale"), 0x38);
-        this->addField(new DynamicField("mouseX"), 0x52);
-        this->addField(new DynamicField("mouseY"), 0x54);
-        this->addField(new DynamicField("isWorldLoaded"), 0x56);
-        this->addField(new DynamicField("heldItemSlot"), 0x58);
-        this->addField(new DynamicField("heldItemName"), 0x94);
+    GuiData() : DynamicStruct("GuiData", 0) {
+        this->addField(new DynamicField("resolution", 0x18));
+        this->addField(new DynamicField("scaledResolution", 0x28));
+        this->addField(new DynamicField("guiSize", 0x30));
+        this->addField(new DynamicField("guiScale", 0x38));
+        this->addField(new DynamicField("mouseX", 0x52));
+        this->addField(new DynamicField("mouseY", 0x54));
+        this->addField(new DynamicField("isWorldLoaded", 0x56));
+        this->addField(new DynamicField("heldItemSlot", 0x58));
+        this->addField(new DynamicField("heldItemName", 0x94));
     };
 
     auto getResolution() -> Vector2 {
@@ -24,9 +24,7 @@ struct GuiData : DynamicStruct {
     };
     auto getScaledResolution() -> Vector2 {
         DynamicField* theField = (DynamicField*)this->get("scaledResolution");
-        Log::getLogger()->write("Get scaled res, address: ")->write(theField->getAddress(), true)->writeLine();
         Vector2 theVec = *((Vector2*)theField->asVoid());
-        Log::getLogger()->write("Got scaled res");
         return theVec;
     };
 	auto getGuiSize() -> double {

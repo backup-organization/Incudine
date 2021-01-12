@@ -31,16 +31,19 @@ auto RenderUtils::drawText(std::string text, Vector2& position, Color& color) ->
 }
 auto RenderUtils::drawText(std::string text, Vector2& position, Color& color, float scale) -> void {
     if(cachedFont) {
-        RenderUtils::getContext()->drawText(cachedFont, &RectangleArea(position), &text, &color, 1.0f, &TextMeasureData(scale), &CaretMeasureData());
-        RenderUtils::getContext()->flushText();
+        if(RenderUtils::getContext()) {
+            RenderUtils::getContext()->drawText(cachedFont, RectangleArea(position), text, color, 1.0f, TextMeasureData(scale), CaretMeasureData());
+            RenderUtils::getContext()->flushText();
+        }
     }
 }
 auto RenderUtils::getTextWidth(std::string text, float scale) -> float {
     if(cachedFont) {
-        return RenderUtils::getContext()->getLineLength(cachedFont, &text, scale);
+        return RenderUtils::getContext()->getLineLength(cachedFont, text, scale);
     }
+    Log::getLogger()->writeLine("No cached font!");
     return 0.0f;
 }
 auto RenderUtils::fillBox(Vector4& box, Color& color) -> void {
-    RenderUtils::getContext()->fillRectangle(&Vector4(box.x, box.z, box.y, box.w), &color, 1.0f);
+    RenderUtils::getContext()->fillRectangle(Vector4(box.x, box.z, box.y, box.w), color, 1.0f);
 }

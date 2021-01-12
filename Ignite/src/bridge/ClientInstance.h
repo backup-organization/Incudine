@@ -9,15 +9,15 @@ struct ClientInstance : DynamicStruct {
     GuiData* guiData = nullptr;
     LocalPlayer* localPlayer = nullptr;
 
-    ClientInstance(uintptr_t address) : DynamicStruct("ClientInstance") {
+    ClientInstance(uintptr_t address) : DynamicStruct("ClientInstance", 0) {
         this->setAddress(address);
-        this->addVirtual(new DynamicMethod("getLocalPlayer"), 23);
-        this->addVirtual(new DynamicMethod("getGuiData"), 194);
+        this->addVirtual(new DynamicMethod("getLocalPlayer", 23));
+        this->addVirtual(new DynamicMethod("getGuiData", 194));
     };
 
     auto getLocalPlayer() -> LocalPlayer* {
         DynamicMethod* getLP = (DynamicMethod*)this->get("getLocalPlayer");
-        uintptr_t(__fastcall** theFn)(uintptr_t)  = (uintptr_t(__fastcall**)(uintptr_t))getLP->asVoid();
+        uintptr_t(__fastcall** theFn)(uintptr_t) = (uintptr_t(__fastcall**)(uintptr_t))getLP->asVoid();
         if(!localPlayer)
             localPlayer = new LocalPlayer();
         localPlayer->setAddress((*theFn)(this->getAddress()));
