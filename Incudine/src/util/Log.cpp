@@ -41,6 +41,10 @@ auto Log::write(uintptr_t toWrite, bool hex) -> Log*  {
     this->write(ss.str());
     return this;
 }
+auto Log::write(float toWrite) -> Log* {
+    this->write(std::to_string(toWrite));
+    return this;
+}
 auto Log::write(void* toWrite, bool hex) -> Log* {
     return this->write((uintptr_t)toWrite, hex);
 }

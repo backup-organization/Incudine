@@ -21,8 +21,10 @@ auto RenderUtils::onRender(void(listenFunc)()) -> void {
     drawFuncs.push_back(listenFunc);
 }
 auto RenderUtils::invokeDraws() -> void {
-    for(auto draw : drawFuncs) {
-        draw();
+    if(cachedFont) {
+        for(auto draw : drawFuncs) {
+            draw();
+        }
     }
 }
 

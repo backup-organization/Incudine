@@ -15,11 +15,16 @@ auto startIncudine() -> int {
     MouseHook::hook();
     UIContextHook::hook();
 
-    ModuleManager::getModuleManager();
+    while(!IMem::getClientInstance());
+    while(!IMem::getClientInstance()->getAddress());
 
     Log::getLogger()->write("ClientInstance*: ")->write(IMem::getClientInstance()->getAddress(), true)->writeLine();
     Log::getLogger()->write("GuiData*: ")->write(IMem::getClientInstance()->getGuiData()->getAddress(), true)->writeLine();
     Log::getLogger()->write("LocalPlayer*: ")->write(IMem::getClientInstance()->getLocalPlayer()->getAddress(), true)->writeLine();
+
+    ModuleManager::getModuleManager();
+
+    
     return 0;
 }
 

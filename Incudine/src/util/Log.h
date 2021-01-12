@@ -15,6 +15,7 @@ public:
     auto getPath() -> std::string;
     auto write(const std::string& toWrite) -> Log*;
     auto write(uintptr_t toWrite, bool hex) -> Log*;
+    auto write(float toWrite) -> Log*;
     auto write(void* toWrite, bool hex) -> Log*;
     auto writeLine(const std::string &toWrite) -> Log*;
     auto writeLine() -> Log*;
