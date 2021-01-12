@@ -2,6 +2,7 @@
 
 void ModInfo::onDraw() {
     //RenderUtils::drawText("Keystrokes", Vector2(10, 10), Color());
+    ClientInstance* ci = IMem::getClientInstance();
     float width = RenderUtils::getTextWidth("Incudine", 1.0f);
     Log::getLogger()->write("Got width: ")->write(width)->writeLine();
     GuiData* gd = ci->getGuiData();

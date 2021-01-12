@@ -23,14 +23,18 @@ struct MinecraftUIRenderContext : DynamicStruct {
         return (*theFn)(this->getAddress(), font, &text, size, false);
     }
     auto drawText(BitmapFont* font, RectangleArea& rect, std::string& text, Color& color, float alpha, TextMeasureData& measureData, CaretMeasureData& caretData) -> void {
+        Log::getLogger()->writeLine("Starting text draw");
         DynamicMethod* theFunc = (DynamicMethod*)this->get("drawText");
         void(__fastcall** theFn)(uintptr_t, BitmapFont*, RectangleArea*, std::string*, Color*, float, class TextAlignment*, TextMeasureData*, CaretMeasureData*)  = (void(__fastcall**)(uintptr_t, BitmapFont*, RectangleArea*, std::string*, Color*, float, class TextAlignment*, TextMeasureData*, CaretMeasureData*))theFunc->asVoid();
         (*theFn)(this->getAddress(), font, &rect, &text, &color, alpha, nullptr, &measureData, &caretData);
+        Log::getLogger()->writeLine("Finished text draw");
     }
     auto flushText() -> void {
-        DynamicMethod* theFunc = (DynamicMethod*)this->get("drawText");
+        Log::getLogger()->writeLine("Starting text flush");
+        DynamicMethod* theFunc = (DynamicMethod*)this->get("flushText");
         void(__fastcall** theFn)(uintptr_t, float)  = (void(__fastcall**)(uintptr_t, float))theFunc->asVoid();
         (*theFn)(this->getAddress(), 0);
+        Log::getLogger()->writeLine("flushed text");
     }
     auto drawRectangle(Vector4& positions, Color& color, float alpha, int width) -> void {
         DynamicMethod* theFunc = (DynamicMethod*)this->get("drawRectangle");
