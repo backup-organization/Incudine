@@ -4,6 +4,7 @@
 #include "DynamicStruct.h"
 #include "LocalPlayer.h"
 #include "GuiData.h"
+#include "../util/VersionUtils.h"
 
 struct ClientInstance : DynamicStruct {
     GuiData* guiData = nullptr;
@@ -11,8 +12,16 @@ struct ClientInstance : DynamicStruct {
 
     ClientInstance(uintptr_t address) : DynamicStruct("ClientInstance", 0) {
         this->setAddress(address);
+        SupportedVersion version = VersionUtils::getVersion();
         this->addVirtual(new DynamicMethod("getLocalPlayer", 23));
-        this->addVirtual(new DynamicMethod("getGuiData", 194));
+        switch(version) {
+        case MC_1_12_1_1:
+            this->addVirtual(new DynamicMethod("getGuiData", 181));
+            break;
+        default:
+            this->addVirtual(new DynamicMethod("getGuiData", 194));
+            break;
+        }
     };
 
     auto getLocalPlayer() -> LocalPlayer* {

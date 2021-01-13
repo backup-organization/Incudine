@@ -11,7 +11,9 @@ enum SupportedVersion {
 };
 
 class VersionUtils {
+    static inline SupportedVersion theVersion;
 public:
+    static auto calculateVersion() -> SupportedVersion;
     static auto getVersion() -> SupportedVersion;
     static auto strToVer(std::string) -> SupportedVersion;
     static auto verToStr(SupportedVersion) -> std::string;

@@ -25,7 +25,14 @@ auto VersionUtils::verToStr(SupportedVersion ver) -> std::string {
     }
 }
 
+
 auto VersionUtils::getVersion() -> SupportedVersion {
+    if(!theVersion)
+        theVersion = calculateVersion();
+    return theVersion;
+}
+
+auto VersionUtils::calculateVersion() -> SupportedVersion {
     DWORD  verHandle = 0;
     UINT   size      = 0;
     LPBYTE lpBuffer  = NULL;

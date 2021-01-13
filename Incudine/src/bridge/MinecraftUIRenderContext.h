@@ -7,6 +7,7 @@
 #include "Color.h"
 #include "TextMeasureData.h"
 #include "CaretMeasureData.h"
+#include "../util/VersionUtils.h"
 
 struct MinecraftUIRenderContext : DynamicStruct {
     MinecraftUIRenderContext() : DynamicStruct("MinecraftUIRenderContext", 0) {

@@ -14,56 +14,69 @@ auto UIContextHook::textCallback(uintptr_t renderContext, struct BitmapFont* fon
     return PLH::FnCast(textOriginal, &textCallback)(renderContext, font, rect, text, color, alpha, alignment, measureData, caretData);
 }
 
+
+auto scanContextAddr() -> uintptr_t {
+    uintptr_t uiContextAddr = 0;
+    std::vector<SigInfo*>* uicontext_signatures;
+    uicontext_signatures = new std::vector<SigInfo*>();
+    uicontext_signatures->push_back(new SigInfo(new std::string("48 8B ?? 55 56 57 41 ?? 41 ?? 41 ?? 41 ?? 48 ?? ?? ?? ?? ?? ?? 48 81 ?? ?? ?? ?? ?? ?? C7 ?? ?? ?? ?? ?? ?? ?? 89 ?? ?? ?? 29 ?? ?? 48 8B ?? ?? ?? ?? ?? 48 33 ?? ?? 89 ?? ?? ?? ?? ?? ?? 89 ?? ?? ?? 4C 8B ?? ?? 89 ?? ?? ?? 33"), 0)); //1.12.1.1+
+    uicontext_signatures->push_back(new SigInfo(new std::string("48 8B ?? ?? 89 ?? ?? 55 56 57 41 ?? 41 ?? 41 ?? 41 ?? 48 ?? ?? ?? ?? ?? ?? 48 81 ?? ?? ?? ?? ?? ?? 29 ?? ?? ?? 29 ?? ?? 48 8B ?? ?? ?? ?? ?? 48 33 ?? ?? 89 ?? ?? ?? ?? ?? 4C 8B ?? ?? 89 ?? ?? ?? 4C"), 0)); //1.16.201.2
+    int index = 0;
+    while(uiContextAddr == 0) {
+        if(index > uicontext_signatures->size()) {
+            Log::getLogger()->writeLine("UIContextHook All signatures failed");
+            return E_FAIL;
+        }
+        SigInfo* info = uicontext_signatures->at(index);
+        std::string* sig = info->signature;
+        int offset = info->offset;
+
+        uiContextAddr = IMem::findSig(sig->c_str());
+        if(uiContextAddr != 0) {
+            uiContextAddr += offset;
+        }
+        index++;
+    }
+    return uiContextAddr;
+}
+auto scanTextAddr() -> uintptr_t {
+    uintptr_t uiContextTextAddr = 0;
+    std::vector<SigInfo*>* uitext_signatures;
+    uitext_signatures = new std::vector<SigInfo*>();
+    uitext_signatures->push_back(new SigInfo(new std::string("89 ?? ?? ?? ?? 89 ?? ?? ?? 57 48 83 ?? ?? 48 ?? ?? ?? 4C 8B ?? 48 ?? ?? ?? ?? ?? ?? ?? 48"), -1)); //1.12.1.1+
+    uitext_signatures->push_back(new SigInfo(new std::string("89 ?? ?? ?? 55 56 57 48 83 ?? ?? 4C ?? ?? ?? ?? ?? ?? ?? 48"), -1)); //1.16.201.2
+    int index = 0;
+    while(uiContextTextAddr == 0) {
+        if(index > uitext_signatures->size()) {
+            Log::getLogger()->writeLine("UIContextHook TextDraw All signatures failed");
+            return E_FAIL;
+        }
+        SigInfo* info = uitext_signatures->at(index);
+        std::string* sig = info->signature;
+        int offset = info->offset;
+
+        uiContextTextAddr = IMem::findSig(sig->c_str());
+        if(uiContextTextAddr != 0) {
+            uiContextTextAddr += offset;
+        }
+        index++;
+    }
+    return uiContextTextAddr;
+}
+
 auto UIContextHook::hook() -> HRESULT {
 
     Log::getLogger()->writeLine("Installing UIContextHook...");
 
     //UI context
-    uintptr_t uiContextAddr = 0;
-    {
-        std::vector<SigInfo*>* uicontext_signatures;
-        uicontext_signatures = new std::vector<SigInfo*>();
-        uicontext_signatures->push_back(new SigInfo(new std::string("48 8B ?? 55 56 57 41 ?? 41 ?? 41 ?? 41 ?? 48 ?? ?? ?? ?? ?? ?? 48 81 ?? ?? ?? ?? ?? ?? C7 ?? ?? ?? ?? ?? ?? ?? 89 ?? ?? ?? 29 ?? ?? 48 8B ?? ?? ?? ?? ?? 48 33 ?? ?? 89 ?? ?? ?? ?? ?? ?? 89 ?? ?? ?? 4C 8B ?? ?? 89 ?? ?? ?? 33"), 0)); //1.12.1.1+
-        uicontext_signatures->push_back(new SigInfo(new std::string("48 8B ?? ?? 89 ?? ?? 55 56 57 41 ?? 41 ?? 41 ?? 41 ?? 48 ?? ?? ?? ?? ?? ?? 48 81 ?? ?? ?? ?? ?? ?? 29 ?? ?? ?? 29 ?? ?? 48 8B ?? ?? ?? ?? ?? 48 33 ?? ?? 89 ?? ?? ?? ?? ?? 4C 8B ?? ?? 89 ?? ?? ?? 4C"), 0)); //1.16.201.2
-        int index = 0;
-        while(uiContextAddr == 0) {
-            if(index > uicontext_signatures->size()) {
-                Log::getLogger()->writeLine("UIContextHook All signatures failed");
-                return E_FAIL;
-            }
-            SigInfo* info = uicontext_signatures->at(index);
-            std::string* sig = info->signature;
-            int offset = info->offset;
-
-            uiContextAddr = IMem::findSig(sig->c_str());
-            if(uiContextAddr != 0) {
-                uiContextAddr += offset;
-            }
-            index++;
-        }
-    }
+    uintptr_t uiContextAddr = scanContextAddr();
     //Text draw
-    uintptr_t uiContextTextAddr = 0;
-    {
-        std::vector<SigInfo*>* uitext_signatures;
-        uitext_signatures = new std::vector<SigInfo*>();
-        uitext_signatures->push_back(new SigInfo(new std::string("89 ?? ?? ?? ?? 89 ?? ?? ?? 57 48 83 ?? ?? 48 ?? ?? ?? 4C 8B ?? 48 ?? ?? ?? ?? ?? ?? ?? 48"), -1)); //1.12.1.1+
-        uitext_signatures->push_back(new SigInfo(new std::string("89 ?? ?? ?? 55 56 57 48 83 ?? ?? 4C ?? ?? ?? ?? ?? ?? ?? 48"), -1)); //1.16.201.2
-        int index = 0;
-        while(uiContextTextAddr == 0) {
-            if(index > uitext_signatures->size()) {
-                Log::getLogger()->writeLine("UIContextHook TextDraw All signatures failed");
-                return E_FAIL;
-            }
-            SigInfo* info = uitext_signatures->at(index);
-            std::string* sig = info->signature;
-            int offset = info->offset;
+    uintptr_t uiContextTextAddr = scanTextAddr();
 
-            uiContextTextAddr = IMem::findSig(sig->c_str());
-            if(uiContextTextAddr != 0) {
-                uiContextTextAddr += offset;
-            }
-            index++;
+    while(1) {
+        while(1) {
+            break;
+            break;
         }
     }
 
