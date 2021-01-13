@@ -260,5 +260,7 @@ Ignite.dir/
 *.vcxproj.filters
 *.sln
 .vscode/
+.vs/
+CMakeSettings.json
 Loader.dir/
 Incudine.dir/

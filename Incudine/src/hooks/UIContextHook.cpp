@@ -73,13 +73,6 @@ auto UIContextHook::hook() -> HRESULT {
     //Text draw
     uintptr_t uiContextTextAddr = scanTextAddr();
 
-    while(1) {
-        while(1) {
-            break;
-            break;
-        }
-    }
-
     Log::getLogger()->write("UIContextFuncAddr: ")->write(uiContextAddr, true)->writeLine("");
     Log::getLogger()->write("UIDrawTextFuncAddr: ")->write(uiContextTextAddr, true)->writeLine("");
 

@@ -3,10 +3,13 @@
 
 std::vector<SigInfo*>* signatures;
 
-auto ClientInstanceHook::clientInstanceCallback(uintptr_t theInstance, int param_2) -> int {
+auto ClientInstanceHook::clientInstanceCallback_1_16_201_2(uintptr_t theInstance, char param_2) -> int {
     IMem::setClientInstance(theInstance);
-    //Log::getLogger()->write("Client instance address: ")->write((uintptr_t)theInstance, true)->writeLine("");
-    return PLH::FnCast(clientInstanceOriginal, &clientInstanceCallback)(theInstance, param_2);
+    return PLH::FnCast(clientInstanceOriginal, &clientInstanceCallback_1_16_201_2)(theInstance, param_2);
+}
+auto __fastcall ClientInstanceHook::clientInstanceCallback_1_12_1_1(uintptr_t theInstance, uintptr_t param_2) -> int {
+    IMem::setClientInstance(theInstance);
+    return PLH::FnCast(clientInstanceOriginal, &clientInstanceCallback_1_12_1_1)(theInstance, param_2);
 }
 
 auto ClientInstanceHook::hook() -> HRESULT {
@@ -41,7 +44,15 @@ auto ClientInstanceHook::hook() -> HRESULT {
     Log::getLogger()->writeLine("Cleaned up signature memory");
 
     PLH::CapstoneDisassembler dis(PLH::Mode::x64);
-    PLH::x64Detour detourHook((char*)clientInstanceHookAddr, (char*)&clientInstanceCallback, &clientInstanceOriginal, dis);
+    SupportedVersion version = VersionUtils::getVersion();
+    switch(version) {
+    case MC_1_12_1_1:
+        PLH::x64Detour detourHook((char*)clientInstanceHookAddr, (char*)&clientInstanceCallback_1_12_1_1, &clientInstanceOriginal, dis);
+        break;
+    default:
+        PLH::x64Detour detourHook((char*)clientInstanceHookAddr, (char*)&clientInstanceCallback_1_16_201_2, &clientInstanceOriginal, dis);
+        break;
+    }
 
     Log::getLogger()->writeLine("Created detour hook instance");
 
