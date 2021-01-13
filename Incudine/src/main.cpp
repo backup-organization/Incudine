@@ -1,6 +1,7 @@
 #include <windows.h>
 #include "util/Log.h"
 #include "util/IMem.h"
+#include "util/VersionUtils.h"
 #include "hooks/ClientInstanceHook.h"
 #include "hooks/KeyHook.h"
 #include "hooks/MouseHook.h"
@@ -9,6 +10,12 @@
 
 auto startIncudine() -> int {
     Log::getLogger()->writeLine("Loading Incudine...");
+
+    Log::getLogger()->writeLine("Getting Minecraft version...");
+    SupportedVersion ver = VersionUtils::getVersion();
+    if(ver == MC_UNSUPPORTED) {
+        Log::getLogger()->writeLine("WARNING: You are running Incudine on an unsupported version!");
+    }
 
     ClientInstanceHook::hook();
     KeyHook::hook();
