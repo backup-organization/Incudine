@@ -7,11 +7,12 @@ void Keystrokes::drawKey(char key, Vector2 loc, float scale) {
     float width = RenderUtils::getTextWidth(keyStr, scale);
     Vector4 textBgRect = Vector4(loc.x-(5*scale), loc.y-(5*scale), loc.x+width+(4*scale), loc.y+width+(6*scale));
     RenderUtils::fillBox(textBgRect, backGround_BG);
-    RenderUtils::drawText(keyStr, loc, textColor_BG, scale);
+    Color textColor = textColor_BG;
     if(InputUtils::isKeyDown(key)) {
         if(alphaValue < 1.0f) {
             transitions[transitionId]+=0.01f;
         }
+        textColor = textColor_FG;
     }
     else {
         if(alphaValue > 0.0f) {
@@ -19,7 +20,7 @@ void Keystrokes::drawKey(char key, Vector2 loc, float scale) {
         }
     }
     RenderUtils::fillBox(textBgRect, backGround_FG, alphaValue);
-    RenderUtils::drawText(keyStr, loc, textColor_FG, scale);
+    RenderUtils::drawText(keyStr, loc, textColor, scale);
 }
 void drawButton(char button, Vector2 loc, float scale) {
     std::string buttonName;

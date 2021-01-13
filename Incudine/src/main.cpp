@@ -31,6 +31,7 @@ auto startIncudine() -> int {
 
     ModuleManager::getModuleManager();
 
+    Log::getLogger()->writeLine("Incudine loaded!");
     
     return 0;
 }

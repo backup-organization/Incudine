@@ -11,11 +11,13 @@
 
 struct MinecraftUIRenderContext : DynamicStruct {
     MinecraftUIRenderContext() : DynamicStruct("MinecraftUIRenderContext", 0) {
+        Log::getLogger()->writeLine("Creating UI ctx inst");
         this->addVirtual(new DynamicMethod("getLineLength", 1));
         this->addVirtual(new DynamicMethod("drawText", 5));
         this->addVirtual(new DynamicMethod("flushText", 6));
         this->addVirtual(new DynamicMethod("drawRectangle", 12));
         this->addVirtual(new DynamicMethod("fillRectangle", 13));
+        Log::getLogger()->writeLine("Created UI ctx inst");
     };
 
     auto getLineLength(BitmapFont* font, std::string& text, float size) -> float {
