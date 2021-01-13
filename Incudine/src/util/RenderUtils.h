@@ -29,6 +29,7 @@ public:
     static auto drawText(std::string text, Vector2& position, Color& color, float scale) -> void;
     static auto getTextWidth(std::string text, float scale) -> float;
     static auto fillBox(Vector4& box, Color& color) -> void;
+    static auto fillBox(Vector4& box, Color& color, float alpha) -> void;
 };
 
 #endif /* INCUDINE_RENDERUTILS_H */

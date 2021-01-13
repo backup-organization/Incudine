@@ -2,26 +2,24 @@
 
 void Keystrokes::drawKey(char key, Vector2 loc, float scale) {
     transitionId++;
-    float colorValue = transitions[transitionId];
-    Color textColor = Color(1,1,1,1);
-    Color bgColor = Color(colorValue,colorValue,colorValue,colorValue);
-    if(InputUtils::isKeyDown(key)) {
-        if(colorValue < 1.0f) {
-            transitions[transitionId]+=0.01f;
-        }
-        textColor = Color(0,0,0,0);
-        bgColor = Color(colorValue,colorValue,colorValue,colorValue);
-    }
-    else {
-        if(colorValue > 0.0f) {
-            transitions[transitionId]-=0.01f;
-        }
-    }
+    float alphaValue = transitions[transitionId];
     std::string keyStr = std::string(1, key);
     float width = RenderUtils::getTextWidth(keyStr, scale);
     Vector4 textBgRect = Vector4(loc.x-(5*scale), loc.y-(5*scale), loc.x+width+(4*scale), loc.y+width+(6*scale));
-    RenderUtils::fillBox(textBgRect, bgColor);
-    RenderUtils::drawText(keyStr, loc, textColor, scale);
+    RenderUtils::fillBox(textBgRect, backGround_BG);
+    RenderUtils::drawText(keyStr, loc, textColor_BG, scale);
+    if(InputUtils::isKeyDown(key)) {
+        if(alphaValue < 1.0f) {
+            transitions[transitionId]+=0.01f;
+        }
+        RenderUtils::fillBox(textBgRect, backGround_FG, alphaValue);
+        RenderUtils::drawText(keyStr, loc, textColor_FG, scale);
+    }
+    else {
+        if(alphaValue > 0.0f) {
+            transitions[transitionId]-=0.01f;
+        }
+    }
 }
 void drawButton(char button, Vector2 loc, float scale) {
     std::string buttonName;

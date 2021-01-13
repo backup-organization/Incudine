@@ -6,6 +6,7 @@ auto KeyHook::keyPressCallback(int vKey, int state) -> int {
 }
 
 auto KeyHook::hook() -> HRESULT {
+    Log::getLogger()->writeLine("Installing key hook...");
     long long keyHookAddr = IMem::findSig("89 ?? ?? ?? 57 48 83 ?? ?? 8B 05 ?? ?? ?? ?? 8B")-1;
 
     if (!keyHookAddr) {
@@ -19,5 +20,6 @@ auto KeyHook::hook() -> HRESULT {
         return E_FAIL;
     }
 
+    Log::getLogger()->writeLine("Key hook success");
     return S_OK;
 }

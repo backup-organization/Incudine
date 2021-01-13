@@ -18,5 +18,32 @@ struct Color {
         this->b = b;
         this->a = a;
     };
+
+
+    auto getRed() -> float {
+        return this->r;
+    }
+    auto getGreen() -> float {
+        return this->g;
+    }
+    auto getBlue() -> float {
+        return this->b;
+    }
+    auto getAlpha() -> float {
+        return this->a;
+    }
+
+    auto setRed(float r) -> void {
+        this->r = r;
+    }
+    auto setGreen(float g) -> void {
+        this->g = g;
+    }
+    auto setBlue(float b) -> void {
+        this->b = b;
+    }
+    auto setAlpha(float a) -> void {
+        this->a = a;
+    }
 };
 #endif /* INCUDINE_COLOR_H */

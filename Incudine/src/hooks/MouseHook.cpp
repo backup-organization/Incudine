@@ -8,6 +8,7 @@ auto MouseHook::mouseHookCallback(UINT64 param_1, int action, UINT64 param_3, UI
 }
 
 auto MouseHook::hook() -> HRESULT  {
+    Log::getLogger()->writeLine("Installing mouse hook...");
     long long mouseInputAddr = IMem::findSig("48 8B ?? ?? 89 ?? ?? ?? 89 ?? ?? ?? 89 ?? ?? 57 41 ?? 41 ?? 41 ?? 41 ?? 48 83 ?? ?? 44");
 
     if (!mouseInputAddr) {
@@ -21,5 +22,6 @@ auto MouseHook::hook() -> HRESULT  {
         return E_FAIL;
     }
 
+    Log::getLogger()->writeLine("Mouse hook success");
     return S_OK;
 }

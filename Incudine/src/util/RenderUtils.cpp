@@ -49,3 +49,6 @@ auto RenderUtils::getTextWidth(std::string text, float scale) -> float {
 auto RenderUtils::fillBox(Vector4& box, Color& color) -> void {
     RenderUtils::getContext()->fillRectangle(Vector4(box.x, box.z, box.y, box.w), color, 1.0f);
 }
+auto RenderUtils::fillBox(Vector4& box, Color& color, float alpha) -> void {
+    RenderUtils::getContext()->fillRectangle(Vector4(box.x, box.z, box.y, box.w), color, alpha);
+}
