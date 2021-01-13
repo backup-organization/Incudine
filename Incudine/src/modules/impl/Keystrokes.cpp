@@ -12,14 +12,14 @@ void Keystrokes::drawKey(char key, Vector2 loc, float scale) {
         if(alphaValue < 1.0f) {
             transitions[transitionId]+=0.01f;
         }
-        RenderUtils::fillBox(textBgRect, backGround_FG, alphaValue);
-        RenderUtils::drawText(keyStr, loc, textColor_FG, scale);
     }
     else {
         if(alphaValue > 0.0f) {
             transitions[transitionId]-=0.01f;
         }
     }
+    RenderUtils::fillBox(textBgRect, backGround_FG, alphaValue);
+    RenderUtils::drawText(keyStr, loc, textColor_FG, scale);
 }
 void drawButton(char button, Vector2 loc, float scale) {
     std::string buttonName;

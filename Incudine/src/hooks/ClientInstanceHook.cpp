@@ -45,14 +45,17 @@ auto ClientInstanceHook::hook() -> HRESULT {
 
     PLH::CapstoneDisassembler dis(PLH::Mode::x64);
     SupportedVersion version = VersionUtils::getVersion();
+    char* callbackFunc;
     switch(version) {
     case MC_1_12_1_1:
-        PLH::x64Detour detourHook((char*)clientInstanceHookAddr, (char*)&clientInstanceCallback_1_12_1_1, &clientInstanceOriginal, dis);
+        callbackFunc = (char*)&clientInstanceCallback_1_12_1_1;
         break;
     default:
-        PLH::x64Detour detourHook((char*)clientInstanceHookAddr, (char*)&clientInstanceCallback_1_16_201_2, &clientInstanceOriginal, dis);
+        callbackFunc = (char*)&clientInstanceCallback_1_16_201_2;
         break;
     }
+
+    PLH::x64Detour detourHook((char*)clientInstanceHookAddr, callbackFunc, &clientInstanceOriginal, dis);
 
     Log::getLogger()->writeLine("Created detour hook instance");
 
