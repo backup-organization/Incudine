@@ -17,6 +17,7 @@ private:
     static inline Color backGround_FG = Color(1,1,1,0);
     static void onDraw();
     static void drawKey(char key, Vector2 loc, float scale);
+    static void drawButton(char button, Vector2 loc, float scale);
     static inline float transitions[0xFF];
     static inline int transitionId = 0;
     static inline ClientInstance* ci = IMem::getClientInstance();

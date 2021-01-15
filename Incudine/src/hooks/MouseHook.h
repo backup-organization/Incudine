@@ -13,7 +13,7 @@ public:
     static auto hook() -> HRESULT;
 private:
     static inline uint64_t mouseInputOriginal = 0;
-    static auto mouseHookCallback(UINT64 param_1, int action, UINT64 param_3, UINT64 param_4, UINT64 param_5, short param_6, short param_7, byte param_8) -> int;
+    static auto __fastcall mouseHookCallback(uintptr_t mouseItem, char button, bool isDown, short mouseX, short mouseY, short locX, short locY, char param_8) -> int;
 };
 
 

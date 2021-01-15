@@ -1,10 +1,9 @@
 #include "MouseHook.h"
 
 
-auto MouseHook::mouseHookCallback(UINT64 param_1, int action, UINT64 param_3, UINT64 param_4, UINT64 param_5, short param_6, short param_7, byte param_8) -> int {
-    bool isDown = (bool)param_7;
-    InputUtils::setButtonState(action, isDown);
-    return PLH::FnCast(mouseInputOriginal, &mouseHookCallback)(param_1, action, param_3, param_4, param_5, param_6, param_7, param_8);
+auto __fastcall MouseHook::mouseHookCallback(uintptr_t mouseItem, char button, bool isDown, short mouseX, short mouseY, short locX, short locY, char param_8) -> int {
+    InputUtils::setButtonState(button, isDown);
+    return PLH::FnCast(mouseInputOriginal, &mouseHookCallback)(mouseItem, button, isDown, mouseX, mouseY, locX, locY, param_8);
 }
 
 auto MouseHook::hook() -> HRESULT  {
