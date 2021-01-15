@@ -2,7 +2,7 @@
 
 auto RenderUtils::setContext(uintptr_t context) -> void {
     if(!RenderUtils::context)
-        RenderUtils::context = new MinecraftUIRenderContext();
+        RenderUtils::context = new MinecraftUIRenderContext(context);
     RenderUtils::context->setAddress(context);
     
 }

@@ -12,9 +12,9 @@ public:
     Keystrokes();
 private:
     static inline Color textColor_BG = Color(1,1,1,1);
-    static inline Color backGround_BG = Color(0,.2,1,0);
+    static inline Color backGround_BG = Color(0,0,0,0);
     static inline Color textColor_FG = Color(0,0,0,1);
-    static inline Color backGround_FG = Color(1,.7,0,0);
+    static inline Color backGround_FG = Color(1,1,1,0);
     static void onDraw();
     static void drawKey(char key, Vector2 loc, float scale);
     static inline float transitions[0xFF];

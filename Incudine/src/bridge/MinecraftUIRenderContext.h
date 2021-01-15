@@ -10,8 +10,9 @@
 #include "../util/VersionUtils.h"
 
 struct MinecraftUIRenderContext : DynamicStruct {
-    MinecraftUIRenderContext() : DynamicStruct("MinecraftUIRenderContext", 0) {
+    MinecraftUIRenderContext(uintptr_t address) : DynamicStruct("MinecraftUIRenderContext", 0) {
         Log::getLogger()->writeLine("Creating UI ctx inst");
+        this->setAddress(address);
         this->addVirtual(new DynamicMethod("getLineLength", 1));
         this->addVirtual(new DynamicMethod("drawText", 5));
         this->addVirtual(new DynamicMethod("flushText", 6));
