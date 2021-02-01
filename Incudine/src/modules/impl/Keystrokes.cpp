@@ -1,6 +1,6 @@
 #include "Keystrokes.h"
 
-void Keystrokes::drawKey(char key, Vector2 loc, float scale) {
+auto Keystrokes::drawKey(char key, Vector2 loc, float scale) -> void {
     transitionId++;
     float alphaValue = transitions[transitionId];
     std::string keyStr = std::string(1, key);
@@ -22,7 +22,7 @@ void Keystrokes::drawKey(char key, Vector2 loc, float scale) {
     RenderUtils::fillBox(textBgRect, backGround_FG, alphaValue);
     RenderUtils::drawText(keyStr, loc, textColor, scale);
 }
-void Keystrokes::drawButton(char button, Vector2 loc, float scale) {
+auto Keystrokes::drawButton(char button, Vector2 loc, float scale) -> void {
     std::string buttonName;
     switch(button) {
     case 1:
@@ -63,25 +63,26 @@ void Keystrokes::drawButton(char button, Vector2 loc, float scale) {
     RenderUtils::drawText(btnStr, loc, textColor, scale);
 }
 
-void Keystrokes::onDraw() {
-    transitionId = 0;
-    ClientInstance* ci = IMem::getClientInstance();
+auto Keystrokes::onDraw() -> void {
+    if(this->isEnabled()) {
+        transitionId = 0;
+        ClientInstance* ci = IMem::getClientInstance();
 
-    Vector2 resolution = ci->getGuiData()->getScaledResolution();
-    Vector2 wloc = Vector2(100, resolution.y-100);
-    Vector2 aloc = Vector2(65, resolution.y-60);
-    Vector2 sloc = Vector2(100, resolution.y-60);
-    Vector2 dloc = Vector2(135, resolution.y-60);
-    drawKey('W', wloc, 2.0f);
-    drawKey('A', aloc, 2.0f);
-    drawKey('S', sloc, 2.0f);
-    drawKey('D', dloc, 2.0f);
-    Vector2 lmbloc = Vector2(60, resolution.y-25);
-    Vector2 rmbloc = Vector2(113, resolution.y-25);
-    drawButton((char)1, lmbloc, 1.0f);
-    drawButton((char)2, rmbloc, 1.0f);
+        Vector2 resolution = ci->getGuiData()->getScaledResolution();
+        Vector2 wloc = Vector2(100, resolution.y-100);
+        Vector2 aloc = Vector2(65, resolution.y-60);
+        Vector2 sloc = Vector2(100, resolution.y-60);
+        Vector2 dloc = Vector2(135, resolution.y-60);
+        drawKey('W', wloc, 2.0f);
+        drawKey('A', aloc, 2.0f);
+        drawKey('S', sloc, 2.0f);
+        drawKey('D', dloc, 2.0f);
+        Vector2 lmbloc = Vector2(60, resolution.y-25);
+        Vector2 rmbloc = Vector2(113, resolution.y-25);
+        drawButton((char)1, lmbloc, 1.0f);
+        drawButton((char)2, rmbloc, 1.0f);
+    }
 }
 
 Keystrokes::Keystrokes() : Module("Keystrokes") {
-    this->onRender(onDraw);
 }

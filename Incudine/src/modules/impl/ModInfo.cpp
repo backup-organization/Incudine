@@ -11,5 +11,4 @@ void ModInfo::onDraw() {
 }
 
 ModInfo::ModInfo() : Module("ModInfo") {
-    this->onRender(onDraw);
 }

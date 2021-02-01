@@ -6,8 +6,8 @@
 class Renderable
 {
 public:
-    void onRender(void(onDraw)()) {
-        RenderUtils::onRender(onDraw);
+    virtual auto onDraw() -> void {
+
     }
 };
 
